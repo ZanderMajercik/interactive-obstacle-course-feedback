@@ -1,0 +1,306 @@
+body {
+  font-family: 'Noto Sans', sans-serif;
+}
+
+
+.footer .icon-link {
+    font-size: 25px;
+    color: #000;
+}
+
+.link-block a {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.dnerf {
+  font-variant: small-caps;
+}
+
+
+.teaser .hero-body {
+  padding-top: 0;
+  padding-bottom: 3rem;
+}
+
+.teaser {
+  font-family: 'Google Sans', sans-serif;
+}
+
+
+.publication-title {
+}
+
+.publication-banner {
+  max-height: parent;
+
+}
+
+.publication-banner video {
+  position: relative;
+  left: auto;
+  top: auto;
+  transform: none;
+  object-fit: fit;
+}
+
+.publication-header .hero-body {
+}
+
+.publication-title {
+    font-family: 'Google Sans', sans-serif;
+}
+
+.publication-authors {
+    font-family: 'Google Sans', sans-serif;
+}
+
+.publication-venue {
+    color: #555;
+    width: fit-content;
+    font-weight: bold;
+}
+
+.publication-awards {
+    color: #ff3860;
+    width: fit-content;
+    font-weight: bolder;
+}
+
+.publication-authors {
+}
+
+.publication-authors a {
+   color: hsl(204, 86%, 53%) !important;
+}
+
+.publication-authors a:hover {
+    text-decoration: underline;
+}
+
+.author-block {
+  display: inline-block;
+}
+
+.publication-banner img {
+}
+
+.publication-authors {
+  /*color: #4286f4;*/
+}
+
+.publication-video {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.25%;
+
+    overflow: hidden;
+    border-radius: 10px !important;
+}
+
+.publication-video iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.publication-body img {
+}
+
+.results-carousel {
+  overflow: hidden;
+}
+
+.results-carousel .item {
+  margin: 5px;
+  overflow: hidden;
+  border: 1px solid #bbb;
+  border-radius: 10px;
+  padding: 0;
+  font-size: 0;
+}
+
+.results-carousel video {
+  margin: 0;
+}
+
+
+.interpolation-panel {
+  background: #f5f5f5;
+  border-radius: 10px;
+}
+
+.interpolation-panel .interpolation-image {
+  width: 100%;
+  border-radius: 5px;
+}
+
+.interpolation-video-column {
+}
+
+.interpolation-panel .slider {
+  margin: 0 !important;
+}
+
+.interpolation-panel .slider {
+  margin: 0 !important;
+}
+
+#interpolation-image-wrapper {
+  width: 100%;
+}
+#interpolation-image-wrapper img {
+  border-radius: 5px;
+}
+
+
+/* ---------------------------------------------------------------------------
+   Project-specific additions (obstacle course design feedback website)
+   --------------------------------------------------------------------------- */
+
+.obby {
+  font-variant: small-caps;
+}
+
+.publication-venue {
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+  font-size: 1.1rem;
+}
+
+/* Figure blocks lifted from the paper. */
+.paper-figure {
+  margin: 1.5rem 0 0.5rem 0;
+}
+
+.paper-figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 6px;
+}
+
+.paper-figure .figure-caption {
+  margin-top: 0.75rem;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: #4a4a4a;
+  text-align: justify;
+}
+
+.paper-figure .figure-caption b {
+  color: #363636;
+}
+
+/* Image carousel (obstacle gallery). */
+.results-carousel .item img {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 0;
+}
+
+.results-carousel .item .item-caption {
+  padding: 0.6rem 0.8rem;
+  font-size: 0.85rem;
+  color: #4a4a4a;
+  background: #fff;
+  border-top: 1px solid #ededed;
+}
+
+/* Query constraint list. */
+.query-list li {
+  margin-bottom: 0.5rem;
+}
+
+/* Key-numbers strip. */
+.stat-tile {
+  text-align: center;
+  padding: 0.5rem 0.25rem;
+}
+
+.stat-tile .stat-value {
+  font-family: 'Google Sans', sans-serif;
+  font-size: 1.9rem;
+  font-weight: 700;
+  line-height: 1.15;
+  color: #363636;
+}
+
+.stat-tile .stat-label {
+  font-size: 0.85rem;
+  color: #6b6b6b;
+  margin-top: 0.25rem;
+}
+
+/* Breathing room when a section heading follows a figure. */
+.paper-figure + .title.is-4,
+.paper-figure + .title.is-3 {
+  margin-top: 2.75rem;
+}
+
+/* Offset in-page anchors so the heading is not flush with the viewport top. */
+[id] {
+  scroll-margin-top: 1.5rem;
+}
+
+/* ---------------------------------------------------------------------------
+   Figure sizing
+   --------------------------------------------------------------------------- */
+
+/* Supplemental video: same frame width as the flagship figure, sitting directly
+   above it. Note the aspect ratios differ (video 16:9, figure ~2.17:1), so the
+   heights do not match — only the frame width and alignment do. */
+.teaser .hero-body video.teaser-video {
+  display: block;
+  width: 85%;
+  height: auto;
+  margin: 0 auto 1.75rem auto;
+  border-radius: 6px;
+  background: #000;
+}
+
+/* Flagship teaser: 15% smaller. */
+.teaser .hero-body img.teaser-image {
+  display: block;
+  width: 85%;
+  height: auto;
+  margin: 0 auto 1.75rem auto;
+}
+
+/* Figure blocks scaled down 40% (image and caption together, centred). */
+.paper-figure.is-scaled-60 {
+  width: 60%;
+  margin-top: 2.75rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Carousel figures: 32% smaller overall. The border/rounding moves off .item — whose
+   width bulma-carousel sets inline — onto an inner wrapper we can scale. */
+.results-carousel .item {
+  border: none;
+  border-radius: 0;
+  overflow: visible;
+}
+
+.results-carousel .item .carousel-figure {
+  width: 68%;
+  margin: 0 auto;
+  overflow: hidden;
+  border: 1px solid #bbb;
+  border-radius: 10px;
+}
+
+/* Narrow screens: scaled-down figures get their width back. */
+@media screen and (max-width: 768px) {
+  .teaser .hero-body video.teaser-video,
+  .teaser .hero-body img.teaser-image,
+  .paper-figure.is-scaled-60,
+  .results-carousel .item .carousel-figure {
+    width: 100%;
+  }
+}
