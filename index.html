@@ -1,1 +1,611 @@
-Hello, World!
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="A system that gives 3D obstacle course game designers rapid feedback on how their obstacles can be solved, using constrained solvability queries answered by GPU-accelerated policy-guided search.">
+  <meta name="keywords" content="game design, design tools, obstacle course, obby, Go-Explore, reinforcement learning, Roblox">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Rapid Design Feedback for 3D Obstacle Course Games</title>
+
+  <!-- TODO: add your own Google Analytics tag here, or leave this out entirely. -->
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/favicon.svg">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+<body>
+
+
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div class="navbar-menu">
+    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+      <a class="navbar-item" href="#abstract">Abstract</a>
+      <a class="navbar-item" href="#queries">Queries</a>
+      <a class="navbar-item" href="#method">Method</a>
+      <a class="navbar-item" href="#results">Results</a>
+      <a class="navbar-item" href="#gallery">Gallery</a>
+      <a class="navbar-item" href="#BibTeX">BibTeX</a>
+    </div>
+  </div>
+</nav>
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">
+            Providing Rapid Design Feedback for 3D Obstacle Course Games
+            Using Constrained Solvability Queries
+          </h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">Zander Majercik<sup>1,2</sup>,</span>
+            <span class="author-block">Sharon Zhang<sup>1,2</sup>,</span>
+            <span class="author-block">William Wang<sup>1</sup>,</span>
+            <span class="author-block">Tejan Karmali<sup>1</sup>,</span>
+            <span class="author-block">Fangjun Zhou<sup>1</sup>,</span>
+            <span class="author-block">Yucheng Yuan<sup>1</sup>,</span>
+            <span class="author-block">Jean-Peic Chou<sup>1</sup>,</span>
+            <span class="author-block">Maneesh Agrawala<sup>1,2</sup>,</span>
+            <span class="author-block">Kayvon Fatahalian<sup>1,2</sup></span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>Stanford University,</span>
+            <span class="author-block"><sup>2</sup>Roblox</span>
+          </div>
+
+          <div class="is-size-5 has-text-centered">
+            <span class="publication-venue">SIGGRAPH Asia 2026</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. TODO: point at the compiled paper once it is public. -->
+              <span class="link-block">
+                <a href="#"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <!-- Venue link. TODO: point at the ACM DL / SIGGRAPH Asia program page. -->
+              <span class="link-block">
+                <a href="#"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-acm"></i>
+                  </span>
+                  <span>SIGGRAPH Asia 2026</span>
+                </a>
+              </span>
+              <!-- Video Link. TODO: replace with the supplemental video URL. -->
+              <span class="link-block">
+                <a href="#"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-youtube"></i>
+                  </span>
+                  <span>Video</span>
+                </a>
+              </span>
+              <!-- Code Link. TODO: replace with the code release URL. -->
+              <span class="link-block">
+                <a href="#"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                </a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <video class="teaser-video"
+             controls
+             playsinline
+             preload="metadata"
+             poster="./static/images/video_poster.jpg">
+        <source src="./static/videos/supplemental.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+        <a href="./static/videos/supplemental.mp4">Download the video</a> instead.
+      </video>
+
+      <img class="teaser-image" src="./static/images/teaser.png"
+           alt="A designer edits a 3D obstacle course while the system visualizes solution trajectories through it."/>
+      <h2 class="subtitle has-text-centered">
+        Our system shows designers <b>how their obstacle can actually be played</b> —
+        as they edit it.
+      </h2>
+      <div class="content has-text-justified" style="font-size: 0.92rem; color: #4a4a4a;">
+        <p>
+          Starting regions are green, goal regions blue, and surfaces that damage the player red.
+          Parts of an obstacle may move or rotate to create timing challenges. Here the player must
+          traverse a series of platforms while dodging deadly obstacles, and push a yellow block up to
+          a tall wall in order to jump over it. A solution trajectory found automatically by our system
+          is drawn in green and white. Because this feedback arrives seconds after each edit, designers
+          can iterate rapidly toward the experience they intend.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="hero is-light is-small">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-mobile is-multiline">
+        <div class="column is-one-quarter-tablet is-half-mobile stat-tile">
+          <div class="stat-value">14,000&times;</div>
+          <div class="stat-label">faster than real-time<br/>60&nbsp;fps gameplay</div>
+        </div>
+        <div class="column is-one-quarter-tablet is-half-mobile stat-tile">
+          <div class="stat-value">800K+</div>
+          <div class="stat-label">aggregate game steps<br/>per second on one GPU</div>
+        </div>
+        <div class="column is-one-quarter-tablet is-half-mobile stat-tile">
+          <div class="stat-value">seconds</div>
+          <div class="stat-label">to answer most<br/>solvability queries</div>
+        </div>
+        <div class="column is-one-quarter-tablet is-half-mobile stat-tile">
+          <div class="stat-value">4</div>
+          <div class="stat-label">external designers<br/>in our design study</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section" id="abstract">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            We present a system that aids the design of 3D obstacle course games by providing
+            designers with rapid feedback on how obstacles can be solved. Our core contribution is a
+            system for querying for solutions (sequences of player actions) to an obstacle that
+            adhere to designer-specified constraints (e.g., avoid a region, travel through a given
+            waypoint, only perform two jumps, etc.).
+          </p>
+          <p>
+            To solve a wide range of obstacle designs quickly, we author a high-performance
+            implementation of the GoExplore algorithm for exploratory search, and guide search with
+            an obstacle solving agent trained offline using reinforcement learning (RL). To further
+            accelerate search, the system carries out exploration using a custom GPU-accelerated
+            obstacle course game simulator that generates playthrough experience at nearly
+            14,000&times; real time, 60-fps gameplay.
+          </p>
+          <p>
+            Through design studies, we demonstrate that the use of constrained solvability queries in
+            a rapid design loop is sufficiently expressive to help designers understand ways an
+            obstacle can be solved or why it cannot be solved. We also show how the tool can let
+            designers answer higher-level questions such as identifying undesirable solution paths
+            and assessing the difficulty of solutions. This allows them to pursue new design
+            directions they did not originally anticipate. Human playtesting of obstacles designed
+            using our system confirms that human players indeed play the obstacles in the manner the
+            designers intended.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+
+    <!-- Paper video.
+         TODO: uncomment and drop in the supplemental video ID once it is hosted.
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Video</h2>
+        <div class="publication-video">
+          <iframe src="https://www.youtube.com/embed/YOUR_VIDEO_ID?rel=0&amp;showinfo=0"
+                  frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+    -->
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3" id="queries">Solvability Queries</h2>
+        <div class="content has-text-justified">
+          <p>
+            Designers playtest to understand an obstacle's <i>solvability</i>: the set of movement
+            sequences a player can or cannot use to solve it, and the character of those sequences —
+            their difficulty, their strategies, their diversity. Our system lets a designer ask for
+            this directly. A <b>query</b> specifies a starting region and a goal region, plus a set of
+            constraints that limit the behavior a successful playthrough may exhibit:
+          </p>
+          <ul class="query-list">
+            <li>
+              <b>Waypoint regions.</b> Regions a successful playthrough must pass through — used when
+              a designer is looking for solutions that take a particular path through the obstacle.
+            </li>
+            <li>
+              <b>Avoid regions.</b> Regions a successful playthrough cannot pass through — used to
+              understand how an obstacle can be solved while avoiding a particular path.
+            </li>
+            <li>
+              <b>Jump count.</b> A cap on the number of jumps a playthrough may perform — used to ask
+              higher-level questions about play, such as which jumps along a solution path are
+              actually <i>required</i>.
+            </li>
+            <li>
+              <b>Time limit.</b> A cap on the number of game time steps to reach the goal — used to
+              view more efficient playthroughs.
+            </li>
+          </ul>
+          <p>
+            Spatial constraints are 3D regions the designer places with standard
+            translate/rotate/scale handles. Multiple waypoints can be chained in sequence, each with
+            its own jump budget. After a query is submitted the system streams partial results back
+            for immediate visualization, plotting both failed and successful attempts as 3D
+            trajectories in the scene — so the designer can see <i>how</i> an attempt succeeded, or
+            <i>why</i> it failed.
+          </p>
+        </div>
+
+        <div class="paper-figure is-scaled-60">
+          <img src="./static/images/system_overview.png"
+               alt="System overview: queries are authored in Roblox Studio, solved by parallel Go-Explore in a GPU simulator, and returned as trajectories."/>
+          <p class="figure-caption">
+            <b>System overview.</b> Queries are submitted from the front-end in Roblox Studio and
+            loaded into our GPU-accelerated simulator. We then run parallel Go-Explore (using our
+            policy exploration) and return the first solution found. That solution is visualized as a
+            trajectory in Roblox, and can be replayed synchronously with the motion of the level.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3" id="method">Finding Successful Playthroughs</h2>
+        <div class="content has-text-justified">
+          <p>
+            To be useful inside a design loop, the query engine has to return playthroughs in seconds
+            and work on the diverse, complex obstacles designers actually build. Two components make
+            that possible.
+          </p>
+
+          <h3 class="title is-4">Policy-guided exploratory search</h3>
+          <p>
+            We first tried training a general obstacle-solving agent on a large collection of
+            procedurally generated obstacles, but the resulting policy often failed on novel
+            human-authored obstacles — human creativity reliably produces out-of-distribution content.
+            Fine-tuning per query was also impractical within a latency budget of tens of seconds. So
+            we build the engine on <b>Go-Explore</b>, a stochastic exploratory search that repeatedly
+            restores a previously visited simulator state (<i>go</i>) and rolls out from it
+            (<i>explore</i>).
+          </p>
+          <p>
+            We extend it in two ways. <b>Query-dependent binning</b> discretizes state by player XYZ
+            position, elapsed time, jumps taken, and interactable object positions — allocating the
+            highest resolution to the X and Y axes, since obstacle courses demand precise lateral
+            movement, and spending bins on the time, jump, and object dimensions only when the query
+            involves moving objects, limited jumps, or interactables. Bins closer to the goal, or that
+            have satisfied a waypoint, are upweighted during selection.
+          </p>
+          <p>
+            <b>Go-Explore with Policy Selection (GE-PS)</b> changes <i>how</i> we explore. The first
+            time a bin is selected after being discovered or updated, we roll out our pretrained RL
+            policy for the whole exploration step; every subsequent selection of that bin falls back to
+            default random exploration. This exploits the policy's skills wherever the search meets
+            structures resembling common obstacle course idioms, and degrades gracefully to brute-force
+            random search wherever the policy fails to make progress.
+          </p>
+
+          <h3 class="title is-4">A digital twin running at 800K steps/second</h3>
+          <p>
+            The designer works in a standard game engine editor (Roblox Studio), but playthroughs
+            execute in a separate GPU-accelerated simulator that runs an approximation of the game at
+            over 800K aggregate game steps per second — nearly 14,000&times; real-time 60&nbsp;fps
+            gameplay. Query constraints are compiled into the simulation itself: waypoints become
+            blocks that activate the next stage of the chain, avoid regions become damage blocks,
+            and jump and time limits become counters that filter the action space when exhausted.
+          </p>
+        </div>
+
+        <div class="paper-figure is-scaled-60">
+          <img src="./static/images/query_performance.png"
+               alt="Mean time to first solution for five search methods across short, medium, and long queries."/>
+          <p class="figure-caption">
+            <b>Query performance.</b> Mean time to solve (with inter-quartile range) for five methods
+            across 56 solvability queries logged from our design studies, grouped into tertiles by
+            Go-Explore's time to first solution. On long queries our policy-selection strategy
+            (GE-PS) solves more queries than baseline Go-Explore (GE), a &gt;15&nbsp;s reduction in
+            average solve time, at minimal overhead on short and medium queries. Both GE and GE-PS
+            outperform Cell-Free Latent Go-Explore (CFLGE), Policy-Based Go-Explore (PBGE), and a pure
+            RL policy rollout (RL). Queries exceeding the 90&nbsp;s budget are terminated and counted
+            as 90&nbsp;s.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3" id="results">Designing With Solvability Feedback</h2>
+
+        <h3 class="title is-4">Controlling the solution space</h3>
+        <div class="content has-text-justified">
+          <p>
+            The designer intends for the player to ride a thin platform, repositioning to fit through
+            gaps in a series of walls. A first query confirms the intended solution exists — but also
+            surfaces a second one: the first barrier can simply be jumped over. That runs counter to
+            intent, so the designer raises the wall and queries again; no solution comes back, so the
+            edit worked. Finally they use avoid and waypoint regions to ask whether the wall can be
+            jumped <i>around</i>. It can — but that route is counterintuitive to a new player and
+            mechanically demanding, so the designer keeps it.
+          </p>
+        </div>
+        <div class="paper-figure">
+          <img src="./static/images/case_study_platform_door.png"
+               alt="Three-stage design study: an unintended jump-over solution is found, removed by raising the wall, and an alternate route is verified."/>
+          <p class="figure-caption">
+            <b>Design study.</b> Solvability feedback helps the designer identify and remove an
+            undesirable solution. <b>(a)</b> The initial design supports a solution that jumps over the
+            wall instead of passing through its gap. <b>(b)</b> The designer raises the wall so it
+            cannot be jumped over. <b>(c)</b> The designer verifies an alternate solution — jumping
+            <i>around</i> the wall — for experienced players.
+          </p>
+        </div>
+
+        <h3 class="title is-4">External designer study</h3>
+        <div class="content has-text-justified">
+          <p>
+            We recruited four external designers — a professional game developer with games research
+            experience, a professional developer with 19 years of design experience, an enthusiast
+            designer specializing in experimental games, and a professional independent developer
+            working on 2D platformers. They used the system to verify desired solutions, discover and
+            prohibit undesired ones, inspire level edits, and acclimate to an unfamiliar 3D creation
+            platform. Two noted that rapid, in-progress trajectory visualizations were crucial to their
+            process.
+          </p>
+          <p>
+            Designer 1 set out to build a "pixel-perfect platformer." The system showed their initial
+            design was unsolvable because the goal platform sat too high; after an edit made it
+            solvable, a later query revealed an unintended route that skipped their lava ring obstacle
+            entirely. Shrinking the goal and enlarging the ring discouraged it, and a waypoint
+            constraint on the top platform confirmed the intended gameplay end to end. They valued
+            being able to evaluate play on obstacles harder than they could comfortably playtest
+            themselves — and to "press a button and rapidly confirm that a design was still solvable"
+            after each edit.
+          </p>
+        </div>
+        <div class="paper-figure">
+          <img src="./static/images/designer1.png"
+               alt="Five-stage sequence of an external designer's session, from unsolvable design to verified intended solution."/>
+          <p class="figure-caption">
+            <b>External Designer 1.</b> Our system allowed this designer to <b>(a)</b> see why their
+            design was unsolvable, <b>(b)</b> make an edit resulting in a solvable obstacle,
+            <b>(c)</b> see an alternate solution they did not know was possible, <b>(d)</b> make an
+            edit discouraging that solution, and <b>(e)</b> verify that their final design supported
+            their intended solution.
+          </p>
+        </div>
+
+        <h3 class="title is-4">Do humans play it the way the designer intended?</h3>
+        <div class="content has-text-justified">
+          <p>
+            Six college-age playtesters attempted obstacles built with the system. Each first tried to
+            solve the obstacle; on success they were asked to find a harder solution if one existed.
+            Across three design studies, human players solved the obstacles along the paths the
+            designers intended — so designers can trust that the feedback reflects real human play.
+          </p>
+        </div>
+        <div class="paper-figure">
+          <img src="./static/images/human_trajectories.png"
+               alt="Designer-intended trajectories on the top row, matching human playtester trajectories on the bottom row."/>
+          <p class="figure-caption">
+            <b>Human playtesting.</b> Across three design studies, feedback from our system allowed a
+            designer to create obstacle courses that supported their desired solutions (top row): a
+            solution passing through the wall gaps and one jumping around the wall (left), a design
+            with multiple solution paths (center), and a design where players time jumps between
+            platforms to balance the difficulty of the preceding section (right). All of these
+            solutions were reproduced by human playtesters (bottom row). On the rightmost obstacle,
+            playtesters agreed the second section was much easier than the first — exactly as the
+            designer intended based on trajectory feedback.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="hero is-light is-small">
+  <div class="hero-body">
+    <div class="container">
+      <h2 class="title is-3 has-text-centered" id="gallery">Obstacles Built With the System</h2>
+      <div id="results-carousel" class="carousel results-carousel">
+        <div class="item">
+          <div class="carousel-figure">
+            <img src="./static/images/obstacles/ride_platform_through_door.jpg" alt="Ride Platform Through Door"/>
+            <div class="item-caption">Ride Platform Through Door</div>
+          </div>
+        </div>
+        <div class="item">
+          <div class="carousel-figure">
+            <img src="./static/images/obstacles/triple_spinner.jpg" alt="Triple Spinner"/>
+            <div class="item-caption">Triple Spinner</div>
+          </div>
+        </div>
+        <div class="item">
+          <div class="carousel-figure">
+            <img src="./static/images/obstacles/slashing_lava.jpg" alt="Slashing Lava"/>
+            <div class="item-caption">Slashing Lava</div>
+          </div>
+        </div>
+        <div class="item">
+          <div class="carousel-figure">
+            <img src="./static/images/obstacles/platform_slide_checkerboard.jpg" alt="Platform Slide Checkerboard"/>
+            <div class="item-caption">Platform Slide Checkerboard</div>
+          </div>
+        </div>
+        <div class="item">
+          <div class="carousel-figure">
+            <img src="./static/images/obstacles/spiky_log_roll.jpg" alt="Spiky Log Roll"/>
+            <div class="item-caption">Spiky Log Roll</div>
+          </div>
+        </div>
+        <div class="item">
+          <div class="carousel-figure">
+            <img src="./static/images/obstacles/triple_plank_sliding_lava.jpg" alt="Triple Plank Sliding Lava"/>
+            <div class="item-caption">Triple Plank Sliding Lava</div>
+          </div>
+        </div>
+        <div class="item">
+          <div class="carousel-figure">
+            <img src="./static/images/obstacles/truss_hurdles.jpg" alt="Truss Hurdles"/>
+            <div class="item-caption">Truss Hurdles</div>
+          </div>
+        </div>
+        <div class="item">
+          <div class="carousel-figure">
+            <img src="./static/images/obstacles/designer1_final.jpg" alt="External Designer 1's final design"/>
+            <div class="item-caption">External Designer 1's final design</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Discussion</h2>
+        <div class="content has-text-justified">
+          <p>
+            Constrained solvability queries let designers immediately observe how their design
+            decisions shape play. In our studies designers used that feedback to edit the obstacle
+            toward their goals — but knowing the full space of potential solution strategies, or the
+            likely failure modes, could also drive player assistance systems, or breadcrumbs that lead
+            players toward a particular solution.
+          </p>
+          <p>
+            Because players traverse obstacles segment by segment, complex obstacle course games are
+            usually composed of largely independent obstacle designs. Once the segments exist, the
+            designer faces global questions: obstacle sequencing and difficulty progression, and the
+            visual communication of function — making dangerous things look dangerous, shaping an
+            obstacle so it suggests its own solution. A tool that accelerated <i>that</i> process,
+            especially by automatically evaluating the solution an obstacle suggests to a player on
+            first sight, would be fascinating.
+          </p>
+          <p>
+            With AI-generated content becoming ubiquitous, we expect an acute need for tools that help
+            designers turn abundant 3D content into compelling <i>experiences</i>. We hope this work
+            encourages more efforts to help creators understand and evaluate how their design decisions
+            affect gameplay.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <!-- TODO: update venue/year/DOI once the paper is accepted. -->
+    <pre><code>@article{majercik2026solvability,
+  author  = {Majercik, Zander and Zhang, Sharon and Wang, William and
+             Karmali, Tejan and Zhou, Fangjun and Yuan, Yucheng and
+             Chou, Jean-Peic and Agrawala, Maneesh and Fatahalian, Kayvon},
+  title   = {Providing Rapid Design Feedback for 3D Obstacle Course Games
+             Using Constrained Solvability Queries},
+  year    = {2026},
+}</code></pre>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <a class="icon-link" href="#">
+        <i class="fas fa-file-pdf"></i>
+      </a>
+      <a class="icon-link" href="https://github.com/ZanderMajercik/interactive-obstacle-course-feedback"
+         class="external-link" disabled>
+        <i class="fab fa-github"></i>
+      </a>
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website is licensed under a <a rel="license"
+                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+          <p>
+            This website borrows its design and source code from the
+            <a href="https://nerfies.github.io">Nerfies</a> project page; the
+            <a href="https://github.com/nerfies/nerfies.github.io">source code</a> is available there.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

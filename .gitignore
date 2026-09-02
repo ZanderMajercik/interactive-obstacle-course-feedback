@@ -1,0 +1,10 @@
+# Overleaf paper source — reference only, never tracked here
+69f446c33a785b948741e2e6/
+
+# OS / editor cruft
+.DS_Store
+
+# Source video (329 MB) — exceeds GitHub's 100 MB file limit.
+# The web encode in static/videos/ is what the site serves.
+video.mov
+*.mov
