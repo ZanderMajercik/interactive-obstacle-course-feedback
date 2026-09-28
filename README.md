@@ -27,12 +27,26 @@ re-export a figure; `.gitignore` keeps the clone out of version control.
 
 ## Before publishing
 
-Search the source for `TODO` — the following still need real URLs:
+Search the source for `TODO`. Outstanding:
 
-- Paper PDF, SIGGRAPH Asia, video and code buttons in the hero (currently `href="#"`)
-- The supplemental video embed (the `Video` section is commented out)
-- The BibTeX entry's venue/volume/DOI (the hero venue line is set to SIGGRAPH Asia 2026)
-- Optional: a Google Analytics tag in `<head>`
+- **Supplement button** points at `#`. Drop `supplement.pdf` into `static/pdfs/` and
+  change the href — it is the only dead link left in the hero.
+- **Code button** is a non-interactive "Code (coming soon)" span. Turn it back into an
+  `<a href="...">` when the code is released.
+- The BibTeX entry still has no venue/volume/DOI.
+- Optional: a Google Analytics tag in `<head>`.
+
+## Video
+
+`static/videos/supplemental.mp4` is a web encode (H.264, `+faststart`, ~43 MB) of the
+post-submission master. Regenerate with:
+
+```bash
+ffmpeg -i <master>.mov -c:v libx264 -crf 24 -preset medium -pix_fmt yuv420p \
+  -movflags +faststart -c:a aac -b:a 128k static/videos/supplemental.mp4
+```
+
+Masters are gitignored (`*.mov`) — they exceed GitHub's 100 MB file limit.
 
 ## Local preview
 

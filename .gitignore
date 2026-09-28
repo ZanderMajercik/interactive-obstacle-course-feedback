@@ -8,3 +8,7 @@
 # The web encode in static/videos/ is what the site serves.
 video.mov
 *.mov
+
+# Paper PDF drop zone — the served copy is static/pdfs/paper.pdf.
+# Keeping both would duplicate ~9.5 MB in the repo.
+main.pdf
