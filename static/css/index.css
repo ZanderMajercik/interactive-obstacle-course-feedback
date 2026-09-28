@@ -304,3 +304,12 @@ body {
     width: 100%;
   }
 }
+
+/* Button for an artifact that is announced but not yet released. Rendered as a
+   <span>, so it is not focusable or clickable; this just matches the dark
+   buttons beside it while reading as unavailable. */
+.publication-links .button.is-pending {
+  opacity: 0.55;
+  cursor: default;
+  pointer-events: none;
+}

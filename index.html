@@ -43,8 +43,8 @@
     <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
       <a class="navbar-item" href="#abstract">Abstract</a>
       <a class="navbar-item" href="#queries">Queries</a>
-      <a class="navbar-item" href="#method">Method</a>
       <a class="navbar-item" href="#results">Results</a>
+      <a class="navbar-item" href="#performance">Performance</a>
       <a class="navbar-item" href="#gallery">Gallery</a>
       <a class="navbar-item" href="#BibTeX">BibTeX</a>
     </div>
@@ -84,9 +84,9 @@
 
           <div class="column has-text-centered">
             <div class="publication-links">
-              <!-- PDF Link. TODO: point at the compiled paper once it is public. -->
+              <!-- Paper PDF. -->
               <span class="link-block">
-                <a href="#"
+                <a href="./static/pdfs/paper.pdf"
                    class="external-link button is-normal is-rounded is-dark">
                   <span class="icon">
                       <i class="fas fa-file-pdf"></i>
@@ -94,35 +94,35 @@
                   <span>Paper</span>
                 </a>
               </span>
-              <!-- Venue link. TODO: point at the ACM DL / SIGGRAPH Asia program page. -->
+              <!-- Supplement. TODO: point at ./static/pdfs/supplement.pdf once that file lands. -->
               <span class="link-block">
                 <a href="#"
                    class="external-link button is-normal is-rounded is-dark">
                   <span class="icon">
-                      <i class="ai ai-acm"></i>
+                      <i class="fas fa-file-alt"></i>
                   </span>
-                  <span>SIGGRAPH Asia 2026</span>
+                  <span>Supplement</span>
                 </a>
               </span>
-              <!-- Video Link. TODO: replace with the supplemental video URL. -->
+              <!-- Video: jumps to the supplemental video embedded at the top of this page. -->
               <span class="link-block">
-                <a href="#"
+                <a href="#video"
                    class="external-link button is-normal is-rounded is-dark">
                   <span class="icon">
-                      <i class="fab fa-youtube"></i>
+                      <i class="fas fa-play"></i>
                   </span>
                   <span>Video</span>
                 </a>
               </span>
-              <!-- Code Link. TODO: replace with the code release URL. -->
+              <!-- Code: not released yet, so rendered as a non-interactive button. -->
               <span class="link-block">
-                <a href="#"
-                   class="external-link button is-normal is-rounded is-dark">
+                <span class="button is-normal is-rounded is-dark is-pending"
+                      aria-disabled="true">
                   <span class="icon">
                       <i class="fab fa-github"></i>
                   </span>
-                  <span>Code</span>
-                </a>
+                  <span>Code (coming soon)</span>
+                </span>
               </span>
             </div>
           </div>
@@ -136,7 +136,7 @@
 <section class="hero teaser">
   <div class="container is-max-desktop">
     <div class="hero-body">
-      <video class="teaser-video"
+      <video class="teaser-video" id="video"
              controls
              playsinline
              preload="metadata"
@@ -230,18 +230,6 @@
     </div>
     <!--/ Abstract. -->
 
-    <!-- Paper video.
-         TODO: uncomment and drop in the supplemental video ID once it is hosted.
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
-        <h2 class="title is-3">Video</h2>
-        <div class="publication-video">
-          <iframe src="https://www.youtube.com/embed/YOUR_VIDEO_ID?rel=0&amp;showinfo=0"
-                  frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-        </div>
-      </div>
-    </div>
-    -->
   </div>
 </section>
 
@@ -254,118 +242,30 @@
         <div class="content has-text-justified">
           <p>
             Designers playtest to understand an obstacle's <i>solvability</i>: the set of movement
-            sequences a player can or cannot use to solve it, and the character of those sequences —
-            their difficulty, their strategies, their diversity. Our system lets a designer ask for
-            this directly. A <b>query</b> specifies a starting region and a goal region, plus a set of
-            constraints that limit the behavior a successful playthrough may exhibit:
+            sequences a player can or cannot use to solve it. Our system lets a designer ask for that
+            directly. A <b>query</b> names a starting region and a goal region, together with
+            constraints that limit the behavior a successful playthrough may exhibit.
           </p>
-          <ul class="query-list">
-            <li>
-              <b>Waypoint regions.</b> Regions a successful playthrough must pass through — used when
-              a designer is looking for solutions that take a particular path through the obstacle.
-            </li>
-            <li>
-              <b>Avoid regions.</b> Regions a successful playthrough cannot pass through — used to
-              understand how an obstacle can be solved while avoiding a particular path.
-            </li>
-            <li>
-              <b>Jump count.</b> A cap on the number of jumps a playthrough may perform — used to ask
-              higher-level questions about play, such as which jumps along a solution path are
-              actually <i>required</i>.
-            </li>
-            <li>
-              <b>Time limit.</b> A cap on the number of game time steps to reach the goal — used to
-              view more efficient playthroughs.
-            </li>
-          </ul>
           <p>
-            Spatial constraints are 3D regions the designer places with standard
-            translate/rotate/scale handles. Multiple waypoints can be chained in sequence, each with
-            its own jump budget. After a query is submitted the system streams partial results back
-            for immediate visualization, plotting both failed and successful attempts as 3D
-            trajectories in the scene — so the designer can see <i>how</i> an attempt succeeded, or
-            <i>why</i> it failed.
+            The <b>waypoint region</b> is the clearest of those constraints: a 3D region that every
+            successful playthrough must pass through. The designer places it with the same
+            translate, rotate and scale handles they use to build the obstacle, and can chain several
+            in sequence. They reach for it when they want to know whether the obstacle can be solved
+            along one particular path — the route they had in mind while building it. Results stream
+            back as 3D trajectories drawn directly on the obstacle, so the designer sees <i>how</i> an
+            attempt succeeded, or <i>why</i> it failed.
           </p>
         </div>
 
-        <div class="paper-figure is-scaled-60">
-          <img src="./static/images/system_overview.png"
-               alt="System overview: queries are authored in Roblox Studio, solved by parallel Go-Explore in a GPU simulator, and returned as trajectories."/>
+        <div class="paper-figure">
+          <img src="./static/images/waypoint_query.png"
+               alt="A solution trajectory routed through a yellow waypoint region, from the green start to the blue goal."/>
           <p class="figure-caption">
-            <b>System overview.</b> Queries are submitted from the front-end in Roblox Studio and
-            loaded into our GPU-accelerated simulator. We then run parallel Go-Explore (using our
-            policy exploration) and return the first solution found. That solution is visualized as a
-            trajectory in Roblox, and can be replayed synchronously with the motion of the level.
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-<section class="section">
-  <div class="container is-max-desktop">
-    <div class="columns is-centered">
-      <div class="column is-full-width">
-        <h2 class="title is-3" id="method">Finding Successful Playthroughs</h2>
-        <div class="content has-text-justified">
-          <p>
-            To be useful inside a design loop, the query engine has to return playthroughs in seconds
-            and work on the diverse, complex obstacles designers actually build. Two components make
-            that possible.
-          </p>
-
-          <h3 class="title is-4">Policy-guided exploratory search</h3>
-          <p>
-            We first tried training a general obstacle-solving agent on a large collection of
-            procedurally generated obstacles, but the resulting policy often failed on novel
-            human-authored obstacles — human creativity reliably produces out-of-distribution content.
-            Fine-tuning per query was also impractical within a latency budget of tens of seconds. So
-            we build the engine on <b>Go-Explore</b>, a stochastic exploratory search that repeatedly
-            restores a previously visited simulator state (<i>go</i>) and rolls out from it
-            (<i>explore</i>).
-          </p>
-          <p>
-            We extend it in two ways. <b>Query-dependent binning</b> discretizes state by player XYZ
-            position, elapsed time, jumps taken, and interactable object positions — allocating the
-            highest resolution to the X and Y axes, since obstacle courses demand precise lateral
-            movement, and spending bins on the time, jump, and object dimensions only when the query
-            involves moving objects, limited jumps, or interactables. Bins closer to the goal, or that
-            have satisfied a waypoint, are upweighted during selection.
-          </p>
-          <p>
-            <b>Go-Explore with Policy Selection (GE-PS)</b> changes <i>how</i> we explore. The first
-            time a bin is selected after being discovered or updated, we roll out our pretrained RL
-            policy for the whole exploration step; every subsequent selection of that bin falls back to
-            default random exploration. This exploits the policy's skills wherever the search meets
-            structures resembling common obstacle course idioms, and degrades gracefully to brute-force
-            random search wherever the policy fails to make progress.
-          </p>
-
-          <h3 class="title is-4">A digital twin running at 800K steps/second</h3>
-          <p>
-            The designer works in a standard game engine editor (Roblox Studio), but playthroughs
-            execute in a separate GPU-accelerated simulator that runs an approximation of the game at
-            over 800K aggregate game steps per second — nearly 14,000&times; real-time 60&nbsp;fps
-            gameplay. Query constraints are compiled into the simulation itself: waypoints become
-            blocks that activate the next stage of the chain, avoid regions become damage blocks,
-            and jump and time limits become counters that filter the action space when exhausted.
-          </p>
-        </div>
-
-        <div class="paper-figure is-scaled-60">
-          <img src="./static/images/query_performance.png"
-               alt="Mean time to first solution for five search methods across short, medium, and long queries."/>
-          <p class="figure-caption">
-            <b>Query performance.</b> Mean time to solve (with inter-quartile range) for five methods
-            across 56 solvability queries logged from our design studies, grouped into tertiles by
-            Go-Explore's time to first solution. On long queries our policy-selection strategy
-            (GE-PS) solves more queries than baseline Go-Explore (GE), a &gt;15&nbsp;s reduction in
-            average solve time, at minimal overhead on short and medium queries. Both GE and GE-PS
-            outperform Cell-Free Latent Go-Explore (CFLGE), Policy-Based Go-Explore (PBGE), and a pure
-            RL policy rollout (RL). Queries exceeding the 90&nbsp;s budget are terminated and counted
-            as 90&nbsp;s.
+            <b>A waypoint query.</b> The designer constrains solutions to pass through the yellow
+            waypoint region. Our system returns a playthrough that leaves the green start, drops
+            through the waypoint underneath the sweeping red obstacle, and reaches the blue goal. The
+            trajectory is drawn on the obstacle itself and can be replayed in sync with the motion of
+            the level.
           </p>
         </div>
       </div>
@@ -466,6 +366,30 @@
   </div>
 </section>
 
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3" id="performance">Query Performance</h2>
+        <div class="paper-figure is-scaled-60">
+          <img src="./static/images/query_performance.png"
+               alt="Mean time to first solution for five search methods across short, medium, and long queries."/>
+          <p class="figure-caption">
+            <b>Query performance.</b> Mean time to solve (with inter-quartile range) for five methods
+            across 56 solvability queries logged from our design studies, grouped into tertiles by
+            Go-Explore's time to first solution. On long queries our policy-selection strategy
+            (GE-PS) solves more queries than baseline Go-Explore (GE), a &gt;15&nbsp;s reduction in
+            average solve time, at minimal overhead on short and medium queries. Both GE and GE-PS
+            outperform Cell-Free Latent Go-Explore (CFLGE), Policy-Based Go-Explore (PBGE), and a pure
+            RL policy rollout (RL). Queries exceeding the 90&nbsp;s budget are terminated and counted
+            as 90&nbsp;s.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 
 <section class="hero is-light is-small">
   <div class="hero-body">
@@ -526,41 +450,6 @@
 </section>
 
 
-<section class="section">
-  <div class="container is-max-desktop">
-    <div class="columns is-centered">
-      <div class="column is-full-width">
-        <h2 class="title is-3">Discussion</h2>
-        <div class="content has-text-justified">
-          <p>
-            Constrained solvability queries let designers immediately observe how their design
-            decisions shape play. In our studies designers used that feedback to edit the obstacle
-            toward their goals — but knowing the full space of potential solution strategies, or the
-            likely failure modes, could also drive player assistance systems, or breadcrumbs that lead
-            players toward a particular solution.
-          </p>
-          <p>
-            Because players traverse obstacles segment by segment, complex obstacle course games are
-            usually composed of largely independent obstacle designs. Once the segments exist, the
-            designer faces global questions: obstacle sequencing and difficulty progression, and the
-            visual communication of function — making dangerous things look dangerous, shaping an
-            obstacle so it suggests its own solution. A tool that accelerated <i>that</i> process,
-            especially by automatically evaluating the solution an obstacle suggests to a player on
-            first sight, would be fascinating.
-          </p>
-          <p>
-            With AI-generated content becoming ubiquitous, we expect an acute need for tools that help
-            designers turn abundant 3D content into compelling <i>experiences</i>. We hope this work
-            encourages more efforts to help creators understand and evaluate how their design decisions
-            affect gameplay.
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-
 <section class="section" id="BibTeX">
   <div class="container is-max-desktop content">
     <h2 class="title">BibTeX</h2>
@@ -580,7 +469,7 @@
 <footer class="footer">
   <div class="container">
     <div class="content has-text-centered">
-      <a class="icon-link" href="#">
+      <a class="icon-link" href="./static/pdfs/paper.pdf">
         <i class="fas fa-file-pdf"></i>
       </a>
       <a class="icon-link" href="https://github.com/ZanderMajercik/interactive-obstacle-course-feedback"
