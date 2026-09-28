@@ -313,3 +313,10 @@ body {
   cursor: default;
   pointer-events: none;
 }
+
+/* An <a> with no href gets no underline/colour from Bulma's button reset in some
+   browsers; pin it to the same colour as its siblings so the row reads uniformly. */
+.publication-links a.button.is-pending,
+.publication-links a.button.is-pending:hover {
+  color: #fff;
+}

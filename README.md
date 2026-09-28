@@ -29,8 +29,9 @@ re-export a figure; `.gitignore` keeps the clone out of version control.
 
 Search the source for `TODO`. Outstanding:
 
-- **Supplement button** points at `#`. Drop `supplement.pdf` into `static/pdfs/` and
-  change the href — it is the only dead link left in the hero.
+- **`static/pdfs/supplement.pdf` is the anonymous review build** — it says
+  "ANONYMOUS AUTHOR(S)", carries "SUBMISSION ID: 2451", and has review line numbers.
+  Replace it with a camera-ready export before this goes public.
 - **Code button** is a non-interactive "Code (coming soon)" span. Turn it back into an
   `<a href="...">` when the code is released.
 - The BibTeX entry still has no venue/volume/DOI.
@@ -43,10 +44,13 @@ post-submission master. Regenerate with:
 
 ```bash
 ffmpeg -i <master>.mov -c:v libx264 -crf 24 -preset medium -pix_fmt yuv420p \
-  -movflags +faststart -c:a aac -b:a 128k static/videos/supplemental.mp4
+  -movflags +faststart -c:a aac -b:a 128k static/videos/supplemental-v2.mp4
 ```
 
 Masters are gitignored (`*.mov`) — they exceed GitHub's 100 MB file limit.
+
+**Bump the `-vN` suffix whenever you replace the video.** Browsers cache it aggressively;
+reusing the filename means returning visitors keep seeing the old cut.
 
 ## Local preview
 
