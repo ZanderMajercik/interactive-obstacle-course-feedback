@@ -13,3 +13,4 @@ video.mov
 # Keeping both would duplicate ~9.5 MB in the repo.
 /main.pdf
 /supplement.pdf
+/supplement_post_submission.pdf

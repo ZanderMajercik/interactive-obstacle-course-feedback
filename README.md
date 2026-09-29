@@ -29,9 +29,6 @@ re-export a figure; `.gitignore` keeps the clone out of version control.
 
 Search the source for `TODO`. Outstanding:
 
-- **`static/pdfs/supplement.pdf` is the anonymous review build** — it says
-  "ANONYMOUS AUTHOR(S)", carries "SUBMISSION ID: 2451", and has review line numbers.
-  Replace it with a camera-ready export before this goes public.
 - **Code button** is a non-interactive "Code (coming soon)" span. Turn it back into an
   `<a href="...">` when the code is released.
 - The BibTeX entry still has no venue/volume/DOI.
